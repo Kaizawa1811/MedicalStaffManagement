@@ -16,47 +16,65 @@ struct MedicalStaff {
 
 static vector<MedicalStaff> staffDatabase;
 
+static void clearBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 static bool loginSystem() {
     char username[50] = { 0 };
     char password[50] = { 0 };
 
-    printf_s("=== LOGIN ===\n");
-    printf_s("Username: ");
-    scanf_s("%49s", username, (unsigned)_countof(username));
-    printf_s("Password: ");
-    scanf_s("%49s", password, (unsigned)_countof(password));
+    while (true) {
+        printf_s("\n=== LOGIN ===\n");
+        printf_s("Username: ");
+        scanf_s("%49s", username, (unsigned)_countof(username));
+        clearBuffer();
 
-    if (strcmp(username, "admin") == 0 && strcmp(password, "123456") == 0) {
-        return true;
+        printf_s("Password: ");
+        scanf_s("%49s", password, (unsigned)_countof(password));
+        clearBuffer();
+
+        if (strcmp(username, "admin") == 0 && strcmp(password, "123456") == 0) {
+            printf_s("Login successful!\n");
+            return true;
+        }
+        printf_s("Access Denied! Invalid credentials, please try again.\n");
     }
-    return false;
 }
 
 static void addStaff() {
     MedicalStaff newStaff = { 0 };
 
     printf_s("\nEnter Staff ID: ");
-    scanf_s("%d", &newStaff.id);
-    (void)getchar();
+    while (scanf_s("%d", &newStaff.id) != 1) {
+        printf_s("Invalid ID! Please enter a number: ");
+        clearBuffer();
+    }
+    clearBuffer();
 
     printf_s("Enter Name: ");
     scanf_s("%49[^\n]", newStaff.name, (unsigned)_countof(newStaff.name));
-    (void)getchar();
+    clearBuffer();
 
     printf_s("Enter Role: ");
     scanf_s("%49[^\n]", newStaff.role, (unsigned)_countof(newStaff.role));
-    (void)getchar();
+    clearBuffer();
 
     printf_s("Enter Department: ");
     scanf_s("%49[^\n]", newStaff.department, (unsigned)_countof(newStaff.department));
-    (void)getchar();
+    clearBuffer();
 
     printf_s("Enter Rating: ");
-    scanf_s("%lf", &newStaff.rating);
-    (void)getchar();
+    while (scanf_s("%lf", &newStaff.rating) != 1) {
+        printf_s("Invalid Rating! Please enter a number: ");
+        clearBuffer();
+    }
+    clearBuffer();
 
     printf_s("Enter Achievement: ");
     scanf_s("%99[^\n]", newStaff.achievement, (unsigned)_countof(newStaff.achievement));
+    clearBuffer();
 
     staffDatabase.push_back(newStaff);
     printf_s("Staff added successfully!\n");
@@ -65,13 +83,16 @@ static void addStaff() {
 static void viewStaffList() {
     int viewChoice = 0;
     printf_s("\n1. View All | 2. Filter by Dept\nSelection: ");
-    scanf_s("%d", &viewChoice);
-    (void)getchar();
+    if (scanf_s("%d", &viewChoice) != 1) {
+        viewChoice = 1;
+    }
+    clearBuffer();
 
     char filterDept[50] = { 0 };
     if (viewChoice == 2) {
         printf_s("Enter Dept to filter: ");
         scanf_s("%49[^\n]", filterDept, (unsigned)_countof(filterDept));
+        clearBuffer();
     }
 
     printf_s("\n--- LIST ---\n");
@@ -86,7 +107,12 @@ static void viewStaffList() {
 static void deleteStaff() {
     int targetId = 0;
     printf_s("\nEnter ID to delete: ");
-    scanf_s("%d", &targetId);
+    if (scanf_s("%d", &targetId) != 1) {
+        printf_s("Invalid ID format!\n");
+        clearBuffer();
+        return;
+    }
+    clearBuffer();
 
     for (auto it = staffDatabase.begin(); it != staffDatabase.end(); ++it) {
         if (it->id == targetId) {
@@ -99,20 +125,34 @@ static void deleteStaff() {
 }
 
 int main() {
-    if (!loginSystem()) {
-        printf_s("Access Denied!\n");
-        return 0;
-    }
+    loginSystem();
 
     int choice = 0;
     while (choice != 4) {
-        printf_s("\n=== TEAM 4 MANAGEMENT ===\n");
+        printf_s("\n=== MEDICALSTAFF MANAGEMENT ===\n");
         printf_s("1. Add | 2. View | 3. Delete | 4. Exit\nSelection: ");
-        scanf_s("%d", &choice);
+        if (scanf_s("%d", &choice) != 1) {
+            choice = 0;
+        }
+        clearBuffer();
 
-        if (choice == 1) addStaff();
-        else if (choice == 2) viewStaffList();
-        else if (choice == 3) deleteStaff();
+        switch (choice) {
+        case 1:
+            addStaff();
+            break;
+        case 2:
+            viewStaffList();
+            break;
+        case 3:
+            deleteStaff();
+            break;
+        case 4:
+            printf_s("Exiting System...\n");
+            break;
+        default:
+            printf_s("Invalid choice! Please select a number from 1 to 4.\n");
+            break;
+        }
     }
     return 0;
 }
