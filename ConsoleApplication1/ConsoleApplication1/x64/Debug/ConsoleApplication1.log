@@ -1,0 +1,5 @@
+﻿  ConsoleApplication1.cpp
+C:\Users\ACER\source\repos\C test\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(101,24): error C2440: '=': cannot convert from 'const char *' to 'LPCWSTR'
+      C:\Users\ACER\source\repos\C test\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(101,24):
+      Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  
