@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page_title">Manage medical staff</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon"><i class="fa-solid fa-notes-medical"></i></div>
+                <h2 data-i18n="app_logo">Manage <span>medical staff</span></h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="nav_dashboard">Bảng điều khiển</span></li>
+                <li data-target="staff"><i class="fa-solid fa-user-doctor"></i> <span data-i18n="nav_staff">Nhân viên Y tế</span></li>
+                <li data-target="queue"><i class="fa-solid fa-users-line"></i> <span data-i18n="nav_queue">Quản lý Xếp hàng</span></li>
+                <li data-target="finance"><i class="fa-solid fa-file-invoice-dollar"></i> <span data-i18n="nav_finance">Tài chính & Viện phí</span></li>
+                <li data-target="pharmacy"><i class="fa-solid fa-pills"></i> <span data-i18n="nav_pharmacy">Quản lý Kho Dược</span></li>
+                <li data-target="crm"><i class="fa-solid fa-heart-pulse"></i> <span data-i18n="nav_crm">Chăm sóc Khách hàng</span></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Tìm kiếm nhanh...">
+                </div>
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="lang-switch">
+                        <button class="lang-btn active" onclick="setLanguage('vi')" id="btn-vi">VI</button>
+                        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+                    </div>
+
+                    <div class="date-badge"><i class="fa-regular fa-calendar-days"></i> <span id="system-date">2026-03-30</span></div>
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <span data-i18n="user_role">Quản trị viên</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section (Home) -->
+            <section id="dashboard" class="page-section active">
+                <div class="section-header">
+                    <h1 data-i18n="dash_title">Tổng Quan Bệnh Viện</h1>
+                    <p data-i18n="dash_sub">Chào mừng trở lại! Dưới đây là tình trạng hoạt động hôm nay.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bhy-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                        <div class="stat-details">
+                            <h3 data-i18n="stat_bhyt_title">Xếp hàng BHYT</h3>
+                            <p id="stat-bhyt">Số #0000</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon srv-icon"><i class="fa-solid fa-stethoscope"></i></div>
+                        <div class="stat-details">
+                            <h3 data-i18n="stat_srv_title">Xếp hàng Dịch Vụ</h3>
+                            <p id="stat-srv">Số #1000</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon staff-icon"><i class="fa-solid fa-user-nurse"></i></div>
+                        <div class="stat-details">
+                            <h3 data-i18n="stat_staff_title">Tổng Nhân Viên</h3>
+                            <p id="stat-staff">0 Hoạt động</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon med-icon"><i class="fa-solid fa-capsules"></i></div>
+                        <div class="stat-details">
+                            <h3 data-i18n="stat_inv_title">Cảnh Báo Kho</h3>
+                            <p id="stat-inventory">0 Cảnh báo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-hero">
+                    <div class="hero-content">
+                        <h2 data-i18n="hero_title">Quản lý chuyên nghiệp & thân thiện</h2>
+                        <p data-i18n="hero_sub">Hệ thống hỗ trợ tiếng Việt hoàn chỉnh, vận hành dựa trên công nghệ Web tiên tiến với thiết kế giao diện hiện đại.</p>
+                        <button class="btn primary-btn" onclick="document.querySelector('[data-target=\'staff\']').click()" data-i18n="hero_btn">Quản Lý Nhân Viên</button>
+                    </div>
+                    <div class="hero-image">
+                        <i class="fa-solid fa-laptop-medical"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Staff Section -->
+            <section id="staff" class="page-section">
+                <div class="section-header">
+                    <h1 data-i18n="staff_title">Nhân viên Y tế</h1>
+                    <button class="btn primary-btn" id="btn-add-staff"><i class="fa-solid fa-plus"></i> <span data-i18n="staff_add_btn">Thêm Nhân Viên</span></button>
+                </div>
+                <div class="table-container">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="th_id">Mã NV</th>
+                                <th data-i18n="th_name">Họ & Tên</th>
+                                <th data-i18n="th_job">Nghề nghiệp</th>
+                                <th data-i18n="th_dept">Phòng / Khoa</th>
+                                <th data-i18n="th_salary">Lương (VNĐ)</th>
+                                <th data-i18n="th_kpi">KPI</th>
+                                <th data-i18n="th_action">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staff-table-body">
+                            <!-- JS injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Queue Section -->
+            <section id="queue" class="page-section">
+                <div class="section-header">
+                    <h1 data-i18n="queue_title">Quản lý Xếp Hàng</h1>
+                    <p data-i18n="queue_sub">Cấp số thứ tự khám cho bệnh nhân tới hệ thống.</p>
+                </div>
+                <div class="queue-container">
+                    <div class="queue-card srv-card">
+                        <div class="queue-header" data-i18n="q_srv_title">Khám Dịch Vụ</div>
+                        <div class="queue-number" id="current-srv">1000</div>
+                        <button class="btn large-btn" id="btn-issue-srv" data-i18n="q_srv_btn">Cấp Số Mới (1001+)</button>
+                    </div>
+                    <div class="queue-card bhy-card">
+                        <div class="queue-header" data-i18n="q_bhyt_title">Khám Bảo Hiểm (BHYT)</div>
+                        <div class="queue-number" id="current-bhyt">0000</div>
+                        <button class="btn large-btn" id="btn-issue-bhyt" data-i18n="q_bhyt_btn">Cấp Số Mới (0001+)</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finance Section -->
+            <section id="finance" class="page-section">
+                <div class="section-header">
+                    <h1 data-i18n="fin_title">Tài Chính & Viện Phí</h1>
+                    <p data-i18n="fin_sub">Tính toán hóa đơn khám chữa bệnh linh hoạt.</p>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label data-i18n="fin_fee_lbl">Phí Khám Bệnh (VNĐ)</label>
+                        <input type="number" id="fee-input" data-i18n-placeholder="fin_fee_ph" placeholder="Ví dụ: 500000">
+                    </div>
+                    <div class="form-group row-group">
+                        <label data-i18n="fin_ins_lbl">Bệnh nhân có sử dụng thẻ BHYT? (Giảm 80%)</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="insurance-toggle">
+                            <label for="insurance-toggle" class="slider"></label>
+                        </div>
+                    </div>
+                    <div class="invoice-summary">
+                        <div class="summary-row"><span data-i18n="fin_base">Phí Gốc</span> <span id="bill-base">0 VNĐ</span></div>
+                        <div class="summary-row"><span data-i18n="fin_disc">BHYT Chi Trả (-80%)</span> <span id="bill-discount">- 0 VNĐ</span></div>
+                        <div class="summary-row total"><span data-i18n="fin_total">TỔNG THANH TOÁN</span> <span id="bill-total">0 VNĐ</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pharmacy Section -->
+            <section id="pharmacy" class="page-section">
+                <div class="section-header">
+                    <h1 data-i18n="phar_title">Quản lý Kho Dược</h1>
+                    <button class="btn primary-btn" id="btn-add-med"><i class="fa-solid fa-plus"></i> <span data-i18n="phar_add_btn">Nhập Thuốc</span></button>
+                </div>
+                <div class="table-container">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="th_med">Tên Thuốc</th>
+                                <th data-i18n="th_stock">Tồn Kho</th>
+                                <th data-i18n="th_exp">Hạn Sử Dụng (HSD)</th>
+                                <th data-i18n="th_status">Tình Trạng</th>
+                                <th data-i18n="th_action">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pharmacy-table-body">
+                            <!-- JS injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- CRM Section -->
+            <section id="crm" class="page-section">
+                <div class="section-header">
+                    <h1 data-i18n="crm_title">Chăm sóc Khách hàng (CRM)</h1>
+                    <p data-i18n="crm_sub">Hệ thống tự động đồng bộ gửi tin nhắn SMS.</p>
+                </div>
+                <div class="glass-card crm-scanner">
+                    <img src="https://img.icons8.com/color/400/gift.png" alt="Birthday Scan" class="crm-icon">
+                    <h2 data-i18n="crm_scan_title">Quét Sinh Nhật Tự Động</h2>
+                    <p><span data-i18n="crm_scan_desc">Hệ thống sẽ đối chiếu hồ sơ để tìm bệnh nhân có sinh nhật vào hôm nay:</span> <strong id="crm-date-display"></strong></p>
+                    <button class="btn primary-btn" id="btn-scan-crm"><i class="fa-solid fa-radar-bot"></i> <span data-i18n="crm_scan_btn">Tiến hành Quét</span></button>
+                    <div id="crm-results" class="crm-results hidden">
+                        <!-- JS inject -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="staff-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="m_staff_title">Thêm Nhân Viên Y Tế</h2>
+                <i class="fa-solid fa-xmark close-modal"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="m_staff_id">Mã Nhân Viên (ID)</label>
+                    <input type="number" id="staff-id" data-i18n-placeholder="m_staff_id_ph" placeholder="ID (dạng số)">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_name">Họ & Tên</label>
+                    <input type="text" id="staff-name" data-i18n-placeholder="m_staff_name_ph" placeholder="Ví dụ: Nguyễn Văn A">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_job">Chức danh / Nghề nghiệp</label>
+                    <input type="text" id="staff-job" data-i18n-placeholder="m_staff_job_ph" placeholder="Bác sĩ, Y tá...">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_dept">Khoa / Chuyên Ngành</label>
+                    <input type="text" id="staff-dept" data-i18n-placeholder="m_staff_dept_ph" placeholder="Nội Khoa, Ngoại Khoa...">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_sal">Lương Cơ Bản (VNĐ)</label>
+                    <input type="number" id="staff-salary" placeholder="10000000">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_kpi">Chỉ tiêu KPI (1-100)</label>
+                    <input type="number" id="staff-kpi" placeholder="85">
+                </div>
+                <button class="btn primary-btn full-width" id="btn-save-staff" data-i18n="m_staff_save">Lưu Thông Tin</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="med-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="m_inv_title">Nhập Thêm Thuốc</h2>
+                <i class="fa-solid fa-xmark close-modal"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="m_inv_name">Tên Thuốc / Vật Tư</label>
+                    <input type="text" id="med-name" placeholder="Paracetamol">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_inv_qty">Số Lượng Nhập</label>
+                    <input type="number" id="med-stock" placeholder="100">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_inv_exp">Hạn Sử Dụng</label>
+                    <input type="date" id="med-exp">
+                </div>
+                <button class="btn primary-btn full-width" id="btn-save-med" data-i18n="m_inv_save">Thêm Vào Kho</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Staff Modal -->
+    <div class="modal-overlay" id="edit-staff-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="m_esta_title">Chỉnh Sửa Nhân Viên</h2>
+                <i class="fa-solid fa-xmark close-modal"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="m_staff_id">Mã Nhân Viên (ID)</label>
+                    <input type="number" id="edit-staff-id" disabled style="opacity:0.5; cursor:not-allowed">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_name">Họ & Tên</label>
+                    <input type="text" id="edit-staff-name" disabled style="opacity:0.5; cursor:not-allowed">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_job">Chức danh / Nghề nghiệp</label>
+                    <input type="text" id="edit-staff-job" disabled style="opacity:0.5; cursor:not-allowed">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_dept">Khoa / Chuyên Ngành</label>
+                    <input type="text" id="edit-staff-dept" disabled style="opacity:0.5; cursor:not-allowed">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_sal">Lương Cơ Bản (VNĐ)</label>
+                    <input type="number" id="edit-staff-salary">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_staff_kpi">Chỉ tiêu KPI (1-100)</label>
+                    <input type="number" id="edit-staff-kpi">
+                </div>
+                <input type="hidden" id="edit-staff-index">
+                <button class="btn primary-btn full-width" id="btn-update-staff" data-i18n="m_esta_save">Cập Nhật Thông Tin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dispense Med Modal -->
+    <div class="modal-overlay" id="dispense-med-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="m_disp_title">Xuất Kho Thuốc</h2>
+                <i class="fa-solid fa-xmark close-modal"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="m_disp_name">Tên Thuốc (Đang Xuất)</label>
+                    <input type="text" id="disp-med-name" disabled style="opacity:0.5; cursor:not-allowed">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="m_disp_qty">Số Lượng Lấy Ra</label>
+                    <input type="number" id="disp-med-qty" placeholder="10">
+                </div>
+                <input type="hidden" id="disp-med-index">
+                <button class="btn primary-btn full-width" id="btn-dispense-med" data-i18n="m_disp_save">Xác Nhận Xuất</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
